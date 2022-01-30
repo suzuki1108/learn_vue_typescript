@@ -104,7 +104,12 @@
 </template>
 
 <script lang="ts">
-import { profileStore } from '@/store/profile';
+import {
+  profileStore,
+  updateNickname,
+  updateThemeColor,
+  updateUserName,
+} from '@/store/profile';
 import { defineComponent, reactive, toRefs } from '@vue/composition-api';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -131,7 +136,7 @@ export default defineComponent({
      * テーマカラーを保存
      */
     const saveThemeColor = () => {
-      profileStore.profile!.themeColor = state.newThemeColor;
+      updateThemeColor(state.newThemeColor);
     };
 
     /**
@@ -154,7 +159,7 @@ export default defineComponent({
      */
     const saveUserName = () => {
       if (state.newUserName) {
-        profileStore.profile!.userName = state.newUserName;
+        updateUserName(state.newUserName);
       }
       state.isOpenEditUserNameDialog = false;
     };
@@ -179,7 +184,7 @@ export default defineComponent({
      */
     const saveNickname = () => {
       if (state.newNickname) {
-        profileStore.profile!.nickName = state.newNickname;
+        updateNickname(state.newNickname);
       }
       state.isOpenEditNicknameDialog = false;
     };
