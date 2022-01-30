@@ -2,7 +2,7 @@
   <div>
     <h1 @click="home">ホーム</h1>
     <p><router-link to="sign-in">サインイン</router-link></p>
-    <p><button @click="calender">カレンダー</button></p>
+    <p><button @click="calendar">カレンダー</button></p>
     <p><button @click="profile">プロフィール</button></p>
     <p><button @click="share">共有</button></p>
   </div>
@@ -25,9 +25,9 @@ export default defineComponent({
       );
     };
 
-    const calender = () => {
+    const calendar = () => {
       context.root.$router.push({
-        name: 'calender',
+        name: 'calendar',
         params: { type: { hoge: 123, fuga: 'xyz' } },
       });
     };
@@ -42,7 +42,7 @@ export default defineComponent({
 
     return {
       home,
-      calender,
+      calendar,
       profile,
       share,
     };
