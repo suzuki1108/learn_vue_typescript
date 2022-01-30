@@ -51,24 +51,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from '@vue/composition-api';
-import { profileMockData } from '@/store/profile';
-import { Profile } from '@/store/profile.model';
+import {
+  computed,
+  defineComponent,
+  reactive,
+  toRefs,
+} from '@vue/composition-api';
+import { profileStore } from '@/store/profile';
 
 export default defineComponent({
   setup(prop, context) {
-    interface Items {
-      title: string;
-      icon: string;
-      path: string;
-    }
-
-    interface State {
-      items: Items[];
-      signInUser: Profile;
-    }
-
-    const state = reactive<State>({
+    const state = reactive({
       // サブメニューのアイテム
       items: [
         {
@@ -78,7 +71,9 @@ export default defineComponent({
         },
         { title: '共有する', icon: 'share', path: '/share' },
       ],
-      signInUser: profileMockData,
+      signInUser: computed(() => {
+        return profileStore.profile;
+      }),
     });
 
     /**
@@ -96,6 +91,7 @@ export default defineComponent({
     };
 
     const signOut = () => {
+      profileStore.profile = null;
       routerPush('/sign-in');
     };
 
