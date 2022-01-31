@@ -5,7 +5,7 @@
       <v-row>
         <v-col cols="12" md="4">
           <v-avatar :color="profile.themeColor" size="72">
-            <span class="white--text body-2" v-text="profile.nickname" />
+            <span class="white--text body-2" v-text="profile.nickName" />
           </v-avatar>
         </v-col>
         <v-col>
@@ -62,7 +62,7 @@
         </v-card>
       </v-dialog>
       <v-text-field
-        v-model="profile.nickname"
+        v-model="profile.nickName"
         readonly
         label="ニックネーム*"
         append-outer-icon="edit"

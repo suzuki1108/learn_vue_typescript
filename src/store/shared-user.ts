@@ -2,30 +2,6 @@ import { SharedUser } from '@/store/shared-user.model';
 import { reactive } from '@vue/composition-api';
 import { Profile } from './profile.model';
 
-export const sharedUserStore = reactive({
-  sharedUsers: sharedUserMockData,
-});
-
-/**
- * 特定ユーザのプロフィールを更新
- * @param profile
- */
-export const update = (profile: Profile) => {
-  const filteredUser = sharedUserStore.sharedUsers.filter(
-    (user) => user.userId === profile.userId,
-  );
-
-  if (!filteredUser || filteredUser.length === 0) {
-    return;
-  }
-
-  const targetUser = filteredUser[0];
-  targetUser.userName = profile.userName;
-  targetUser.nickname = profile.nickName;
-  targetUser.themeColor = profile.themeColor;
-  targetUser.hasAvatar = profile.hasAvatar;
-};
-
 export const sharedUserMockData: SharedUser[] = [
   {
     userId: '66006b29-727e-4ed8-a3c8-95d4438f66d4',
@@ -60,3 +36,48 @@ export const sharedUserMockData: SharedUser[] = [
     display: true,
   },
 ];
+
+export const sharedUserStore = reactive({
+  sharedUsers: sharedUserMockData,
+});
+
+/**
+ * 特定ユーザのプロフィールを更新
+ * @param profile
+ */
+export const update = (profile: Profile): void => {
+  const filteredUser = sharedUserStore.sharedUsers.filter(
+    (user) => user.userId === profile.userId,
+  );
+
+  if (!filteredUser || filteredUser.length === 0) {
+    return;
+  }
+
+  const targetUser = filteredUser[0];
+  targetUser.userName = profile.userName;
+  targetUser.nickname = profile.nickName;
+  targetUser.themeColor = profile.themeColor;
+  targetUser.hasAvatar = profile.hasAvatar;
+};
+
+/**
+ * 指定したニックネームの一部に前方一致するユーザーを検索します。
+ * @param partOfNickname 前方一致で検索するユーザーのニックネームの一部
+ */
+export const searchUsers = (partOfNickname: string): SharedUser[] => {
+  return sharedUserStore.sharedUsers.filter((user) =>
+    user.nickname.startsWith(partOfNickname),
+  );
+};
+
+/**
+ * 指定したユーザのテーマカラーを取得
+ * @param userId
+ */
+export const getThemeColor = (userId: string): string => {
+  const defaultColor = '#f44336';
+  const user = sharedUserStore.sharedUsers.find(
+    (user) => user.userId === userId,
+  );
+};
