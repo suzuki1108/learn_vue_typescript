@@ -131,6 +131,7 @@ import {
   updateNickname,
   updateThemeColor,
   updateUserName,
+  updateUserNameAsync,
 } from '@/store/profile';
 import { defineComponent, reactive, toRefs } from '@vue/composition-api';
 
@@ -179,9 +180,13 @@ export default defineComponent({
     /**
      * ユーザ名を保存
      */
-    const saveUserName = () => {
-      if (state.newUserName) {
-        updateUserName(state.newUserName);
+    const saveUserName = async () => {
+      try {
+        if (state.newUserName) {
+          await updateUserNameAsync(state.newUserName);
+        }
+      } catch (error) {
+        console.log('error: ', error);
       }
       state.isOpenEditUserNameDialog = false;
     };

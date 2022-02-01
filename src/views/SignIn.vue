@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { profileMockData, profileStore } from '@/store/profile';
+import { signInAsync } from '@/store/profile';
 import { defineComponent } from '@vue/composition-api';
 
 export default defineComponent({
@@ -48,9 +48,13 @@ export default defineComponent({
     /**
      * サインインします。
      */
-    const signIn = () => {
-      profileStore.profile = profileMockData;
-      context.root.$router.push('/');
+    const signIn = async () => {
+      try {
+        await signInAsync();
+        context.root.$router.push('/');
+      } catch (error) {
+        console.log('error: ', error);
+      }
     };
 
     return {
